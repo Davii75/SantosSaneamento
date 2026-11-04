@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chamados de Esgoto - Secretaria de Meio Ambiente de Santos</title>
+    <link rel="stylesheet" href="../../static/css/lista.css">
+</head>
+<body>
+<div class="container">
+    <h1>Chamados de Esgoto - Santos</h1>
+    <a th:href="@{/chamados/novo}" class="btn">+ Registrar Novo Chamado</a>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Endereço</th>
+            <th>Tipo do Problema</th>
+            <th>Status</th>
+            <th>Comentário Sabesp</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="chamado : ${chamados}">
+            <td th:text="${chamado.id}">1</td>
+            <td th:text="${chamado.endereco}">Rua Exemplo, 123</td>
+            <td th:text="${chamado.tipo}">Vazamento de Esgoto</td>
+            <td><span class="badge-status" th:text="${chamado.status}">Aberto</span></td>
+            <td th:text="${chamado.comentarioSabesp != null ? chamado.comentarioSabesp : '-'}">-</td>
+            <td>
+                <a th:href="@{/chamados/editar/{id}(id=${chamado.id})}" class="btn-edit">Editar / Tratar</a>
+                <a th:href="@{/chamados/deletar/{id}(id=${chamado.id})}" class="btn-delete" onclick="return confirm('Tem certeza que deseja excluir este chamado?')">Deletar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

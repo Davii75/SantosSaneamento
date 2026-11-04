@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="../../static/css/form.css">
+    <meta charset="UTF-8">
+    <title>Formulário de Chamado - Esgoto</title>
+</head>
+<body>
+<div class="container">
+    <h1 th:text="${chamado.id == null ? 'Registrar Novo Chamado' : 'Editar / Tratar Chamado'}">
+        Formulário de Chamado
+    </h1>
+
+    <form th:action="@{/chamados/salvar}"
+          th:object="${chamado}"
+          method="post"
+          enctype="multipart/form-data">
+
+        <input type="hidden" th:field="*{id}" />
+
+        <label for="endereco">Endereço do Chamado:</label>
+        <input type="text" id="endereco" th:field="*{endereco}"
+               placeholder="Ex: Av. Ana Costa, 100 - Gonzaga" required />
+
+        <label for="tipo">Tipo de Problema:</label>
+        <select id="tipo" th:field="*{tipo}" required>
+            <option value="" disabled>Selecione o tipo...</option>
+            <option value="Vazamento na via">Vazamento na via pública</option>
+            <option value="Entupimento de rede">Entupimento de rede de esgoto</option>
+            <option value="Mau cheiro / Retorno">Mau cheiro / Retorno de esgoto</option>
+            <option value="Tampa de bueiro quebrada">Tampa de bueiro/poço de visita danificada</option>
+            <option value="Outros">Outros</option>
+        </select>
+
+        <label for="imagem">Selecionar imagem:</label>
+        <input type="file"
+               id="imagem"
+               name="imagem"
+               accept="image/*" />
+
+        <label for="status">Status do Chamado:</label>
+        <select id="status" th:field="*{status}">
+            <option value="Aberto">Aberto</option>
+            <option value="Em Análise (Sabesp)">Em Análise (Sabesp)</option>
+            <option value="Em Atendimento">Em Atendimento</option>
+            <option value="Resolvido">Resolvido</option>
+            <option value="Cancelado">Cancelado</option>
+        </select>
+
+        <label for="comentarioSabesp">Comentário / Parecer da Sabesp:</label>
+        <textarea id="comentarioSabesp"
+                  th:field="*{comentarioSabesp}"
+                  rows="3"
+                  placeholder="Escreva aqui o parecer da equipe técnica..."></textarea>
+
+        <div class="button-group">
+            <button type="submit" class="btn">Salvar Chamado</button>
+            <a th:href="@{/chamados}" class="btn-cancel">Cancelar</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
