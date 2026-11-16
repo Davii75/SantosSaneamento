@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Meus chamados | Santos Saneamento
+  </title>
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="../assets/css/acompanhamento.css">
+  <script defer="" th:src="@{/js/acompanhamento.js}">
+  </script>
+ </head>
+ <body class="">
+  <div class="app-shell">
+   <div th:replace="~{fragments/layout :: sidebar('acompanhamento','cidadao')}">
+   </div>
+   <div class="main">
+    <header class="topbar">
+     <div>
+      <h1>
+       Meus chamados
+      </h1>
+      <p>
+       Acompanhe o andamento das suas solicitações.
+      </p>
+     </div>
+     <div class="top-actions">
+      <span class="live-indicator">
+       <span>
+       </span>
+       Sistema online
+      </span>
+      <span class="header-avatar">
+       ●
+      </span>
+     </div>
+    </header>
+    <div class="page-action">
+     <a class="btn btn-primary" th:href="@{/chamados/novo}">
+      ＋ Registrar novo chamado
+     </a>
+    </div>
+    <div class="content">
+     <div class="citizen-summary card">
+      <div>
+       <span class="summary-icon">
+        ☷
+       </span>
+       <span>
+        <small>
+         Total de solicitações
+        </small>
+        <strong th:text="${total}">
+         03
+        </strong>
+       </span>
+      </div>
+      <div>
+       <span class="summary-icon orange">
+        ◷
+       </span>
+       <span>
+        <small>
+         Em andamento
+        </small>
+        <strong th:text="${andamento}">
+         02
+        </strong>
+       </span>
+      </div>
+      <div>
+       <span class="summary-icon green">
+        ✓
+       </span>
+       <span>
+        <small>
+         Concluídas
+        </small>
+        <strong th:text="${resolvidos}">
+         01
+        </strong>
+       </span>
+      </div>
+     </div>
+     <div class="tracking-heading">
+      <div>
+       <h2>
+        Solicitações recentes
+       </h2>
+       <p>
+        Selecione um chamado para consultar os detalhes.
+       </p>
+      </div>
+      <span>
+       Atualizado agora
+      </span>
+     </div>
+     <div class="tracking-list">
+      <a class="tracking-card card" th:each="chamado : ${chamados}" th:href="@{/chamados/detalhes/{id}(id=${chamado.id},perfil='cidadao')}">
+       <span class="tracking-mark">
+        <span>
+         !
+        </span>
+       </span>
+       <span class="tracking-info">
+        <span>
+         <strong th:text="${chamado.tipo}">
+          Tipo de ocorrência
+         </strong>
+         <span class="badge" th:text="${chamado.status}">
+          Novo
+         </span>
+        </span>
+        <small>
+         ⌖
+         <span th:text="${chamado.endereco + ' · ' + chamado.bairro}">
+          Endereço
+         </span>
+        </small>
+        <small>
+         ▦
+         <span th:text="${#temporals.format(chamado.dataHora,'dd/MM/yyyy HH:mm')}">
+          Data
+         </span>
+        </small>
+       </span>
+       <span class="tracking-protocol">
+        <small>
+         PROTOCOLO
+        </small>
+        <strong th:text="${'#CH-' + chamado.id}">
+         #CH-1048
+        </strong>
+        →
+       </span>
+      </a>
+     </div>
+     <div class="citizen-help">
+      ✉
+      <span>
+       <strong>
+        Precisa de ajuda com um chamado?
+       </strong>
+       <small>
+        Entre em contato pelo 0800 055 0195 informando o número do protocolo.
+       </small>
+      </span>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

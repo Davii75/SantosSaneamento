@@ -1,0 +1,56 @@
+.detail-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(260px, .7fr); gap: 22px; max-width: 1120px; margin: auto; }
+.detail-main, .detail-side { display: grid; gap: 18px; align-content: start; }
+.detail-hero { padding: 25px; display: flex; justify-content: space-between; align-items: flex-start; }
+.detail-hero h2 { color: var(--blue-950); font: 700 20px/1.3 "Manrope"; margin: 9px 0 4px; }
+.detail-hero p { color: var(--muted); font-size: 10px; margin: 0; }
+.info-card, .action-card { padding: 23px; }
+.card-title { display: flex; gap: 11px; margin-bottom: 18px; }
+.title-icon { color: var(--blue-700); background: var(--blue-50); border-radius: 8px; width: 35px; height: 35px; display: grid; place-items: center; }
+.map-placeholder { height: 150px; border-radius: 11px; position: relative; overflow: hidden; background-color: #e9f2f3; background-image: linear-gradient(30deg, transparent 40%, #fff 41%, #fff 47%, transparent 48%), linear-gradient(130deg, transparent 35%, #fff 36%, #fff 43%, transparent 44%); }
+.map-roads { position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 70px, rgba(154,193,199,.18) 71px 73px); }
+.map-pin { position: absolute; left: 48%; top: 38%; color: white; background: var(--blue-700); width: 34px; height: 34px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: grid; place-items: center; box-shadow: 0 4px 9px rgba(0,0,0,.2); }
+.map-pin .icon { transform: rotate(45deg); }
+.map-label { position: absolute; left: calc(48% + 38px); top: 34%; background: white; padding: 9px 12px; border-radius: 7px; box-shadow: var(--shadow); }
+.map-label strong, .map-label small { display: block; font-size: 9px; }
+.map-label small { color: var(--muted); margin-top: 2px; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; margin-top: 18px; }
+.info-grid > div + div { border-left: 1px solid var(--line); padding-left: 20px; }
+.info-grid small, .info-grid strong { display: block; }
+.info-grid small { color: #91a2ad; font-size: 8px; letter-spacing: .8px; }
+.info-grid strong { font-size: 11px; margin-top: 5px; }
+.citizen { display: flex; align-items: center; gap: 10px; margin-top: 15px; }
+.citizen-avatar { background: #ddeef6; color: var(--blue-800); }
+.citizen strong, .citizen small { display: block; font-size: 10px; }
+.citizen small { color: var(--muted); font-size: 9px; margin-top: 2px; }
+.photo-placeholder { height: 132px; border-radius: 10px; background: linear-gradient(135deg, #dfecef, #c8dde2); color: var(--blue-800); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.photo-placeholder span { font-size: 10px; font-weight: 700; margin-top: 6px; }
+.photo-placeholder small { color: #6f8991; font-size: 8px; margin-top: 3px; }
+.action-card h3 { font: 700 14px "Manrope"; margin: 0; color: var(--blue-950); }
+.action-card > p { color: var(--muted); font-size: 10px; margin: 5px 0 18px; }
+.action-card .btn { margin-top: 15px; }
+.timeline { margin: 20px 0; padding-left: 7px; }
+.timeline-item { display: grid; grid-template-columns: 12px 1fr; gap: 9px; position: relative; padding-bottom: 19px; }
+.timeline-item:not(:last-child)::before { content: ""; position: absolute; left: 4px; top: 11px; bottom: 0; width: 1px; background: #d9e6eb; }
+.timeline-dot { width: 9px; height: 9px; margin-top: 3px; background: var(--blue-600); border: 2px solid #d7f0fa; border-radius: 50%; z-index: 1; }
+.timeline-meta { display: flex; justify-content: space-between; }
+.timeline-meta strong { font-size: 9px; }
+.timeline-meta small { color: #99a8b1; font-size: 8px; }
+.timeline-item p { color: var(--muted); font-size: 9px; line-height: 1.5; margin: 5px 0 0; }
+.protocol-box { text-align: center; background: #e7f5fa; border: 1px dashed #99c8da; border-radius: 12px; padding: 18px; }
+.protocol-box span, .protocol-box strong, .protocol-box small { display: block; }
+.protocol-box span { font-size: 8px; color: #79a0b2; letter-spacing: 1px; }
+.protocol-box strong { color: var(--blue-800); font: 800 18px "Manrope"; margin: 4px; }
+.protocol-box small { color: var(--muted); font-size: 8px; }
+.role-action-label { display: block; color: var(--blue-700); font-size: 8px; font-weight: 800; letter-spacing: 1px; margin-bottom: 7px; }
+.read-only-card > .badge { margin: 15px 0 7px; }
+.read-only-card > p { line-height: 1.55; margin-top: 8px; }
+.read-only-notice { display: flex; align-items: center; gap: 7px; border-top: 1px solid var(--line); padding-top: 13px; color: var(--muted); font-size: 9px; }
+@media (max-width: 760px) {
+.detail-hero { flex-direction: column; gap: 14px; }
+.info-grid { grid-template-columns: 1fr; gap: 14px; }
+.info-grid > div + div { border: 0; padding: 0; }
+.map-label { display: none; }
+}
+@media (max-width: 480px) {
+.detail-hero h2 { font-size: 17px; }
+}

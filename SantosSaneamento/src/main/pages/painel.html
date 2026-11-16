@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Painel de acompanhamento | Santos Saneamento
+  </title>
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="../assets/css/painel.css">
+  <script defer="" th:src="@{/js/painel.js}">
+  </script>
+ </head>
+ <body class="">
+  <div class="app-shell">
+   <div th:replace="~{fragments/layout :: sidebar('painel','prefeitura')}">
+   </div>
+   <div class="main">
+    <header class="topbar">
+     <div>
+      <h1>
+       Painel de acompanhamento
+      </h1>
+      <p>
+       Visão geral dos chamados de saneamento em Santos.
+      </p>
+     </div>
+     <div class="top-actions">
+      <span class="live-indicator">
+       <span>
+       </span>
+       Sistema online
+      </span>
+      <span class="header-avatar">
+       ●
+      </span>
+     </div>
+    </header>
+    <div class="content">
+     <div class="dashboard-intro">
+      <div>
+       <span class="eyebrow">
+        VISÃO GERAL
+       </span>
+       <h2>
+        Operação atual
+       </h2>
+      </div>
+      <span class="updated">
+       <span>
+       </span>
+       Dados atualizados agora
+      </span>
+     </div>
+     <div class="stats-row">
+      <div class="card stat-card">
+       <span class="stat-icon tone-blue">
+        ☷
+       </span>
+       <div>
+        <span>
+         Total de chamados
+        </span>
+        <strong th:text="${total}">
+         248
+        </strong>
+       </div>
+      </div>
+      <div class="card stat-card">
+       <span class="stat-icon tone-orange">
+        ◷
+       </span>
+       <div>
+        <span>
+         Em atendimento
+        </span>
+        <strong th:text="${atendimento}">
+         38
+        </strong>
+       </div>
+      </div>
+      <div class="card stat-card">
+       <span class="stat-icon tone-green">
+        ✓
+       </span>
+       <div>
+        <span>
+         Resolvidos
+        </span>
+        <strong th:text="${resolvidos}">
+         184
+        </strong>
+       </div>
+      </div>
+      <div class="card stat-card">
+       <span class="stat-icon tone-purple">
+        ▦
+       </span>
+       <div>
+        <span>
+         Novos / Abertos
+        </span>
+        <strong th:text="${novos}">
+         87%
+        </strong>
+       </div>
+      </div>
+     </div>
+     <div class="charts-grid">
+      <div class="card chart-card wide-chart">
+       <div class="chart-heading">
+        <div>
+         <h3>
+          Chamados por período
+         </h3>
+         <p>
+          Volume ilustrativo de registros e resoluções
+         </p>
+        </div>
+        <div class="legend">
+         <span>
+          <i class="blue-dot">
+          </i>
+          Recebidos
+         </span>
+         <span>
+          <i class="green-dot">
+          </i>
+          Resolvidos
+         </span>
+        </div>
+       </div>
+       <div class="line-chart">
+        <div class="y-labels">
+         <span>
+          60
+         </span>
+         <span>
+          45
+         </span>
+         <span>
+          30
+         </span>
+         <span>
+          15
+         </span>
+         <span>
+          0
+         </span>
+        </div>
+        <div class="chart-canvas">
+         <span class="gridline g1">
+         </span>
+         <span class="gridline g2">
+         </span>
+         <span class="gridline g3">
+         </span>
+         <span class="gridline g4">
+         </span>
+         <svg preserveaspectratio="none" viewbox="0 0 700 180">
+          <path class="area" d="M0 145 C70 125 70 90 140 105 S220 65 280 80 S360 125 420 92 S500 45 560 64 S640 38 700 30 L700 180 L0 180Z">
+          </path>
+          <path class="line-primary" d="M0 145 C70 125 70 90 140 105 S220 65 280 80 S360 125 420 92 S500 45 560 64 S640 38 700 30">
+          </path>
+          <path class="line-secondary" d="M0 155 C60 145 90 120 140 130 S220 100 280 108 S350 145 420 118 S500 78 560 92 S640 70 700 65">
+          </path>
+         </svg>
+         <div class="x-labels">
+          <span>
+           01
+          </span>
+          <span>
+           07
+          </span>
+          <span>
+           13
+          </span>
+          <span>
+           19
+          </span>
+          <span>
+           25
+          </span>
+          <span>
+           31
+          </span>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="card chart-card">
+       <div class="chart-heading">
+        <div>
+         <h3>
+          Status atual
+         </h3>
+         <p>
+          Distribuição dos chamados cadastrados
+         </p>
+        </div>
+       </div>
+       <div class="donut-wrap">
+        <div class="donut">
+         <span>
+          <strong th:text="${total}">
+           248
+          </strong>
+          <small>
+           Total
+          </small>
+         </span>
+        </div>
+        <div class="donut-legend">
+         <span>
+          <i class="dot-blue">
+          </i>
+          <b>
+           Novos
+          </b>
+          <em th:text="${novos}">
+           26
+          </em>
+         </span>
+         <span>
+          <i class="dot-orange">
+          </i>
+          <b>
+           Em atendimento
+          </b>
+          <em th:text="${atendimento}">
+           38
+          </em>
+         </span>
+         <span>
+          <i class="dot-green">
+          </i>
+          <b>
+           Resolvidos
+          </b>
+          <em th:text="${resolvidos}">
+           142
+          </em>
+         </span>
+        </div>
+       </div>
+      </div>
+      <div class="card chart-card">
+       <div class="chart-heading">
+        <div>
+         <h3>
+          Bairros com mais chamados
+         </h3>
+         <p>
+          Concentração das ocorrências cadastradas
+         </p>
+        </div>
+       </div>
+       <div class="ranking">
+        <div class="rank">
+         <span>
+          1
+         </span>
+         <div>
+          <strong>
+           Boqueirão
+          </strong>
+          <span class="rank-bar">
+           <i style="width:82%">
+           </i>
+          </span>
+         </div>
+         <em>
+          42
+          <small>
+           18%
+          </small>
+         </em>
+        </div>
+        <div class="rank">
+         <span>
+          2
+         </span>
+         <div>
+          <strong>
+           Centro
+          </strong>
+          <span class="rank-bar">
+           <i style="width:68%">
+           </i>
+          </span>
+         </div>
+         <em>
+          34
+          <small>
+           14%
+          </small>
+         </em>
+        </div>
+        <div class="rank">
+         <span>
+          3
+         </span>
+         <div>
+          <strong>
+           Gonzaga
+          </strong>
+          <span class="rank-bar">
+           <i style="width:58%">
+           </i>
+          </span>
+         </div>
+         <em>
+          29
+          <small>
+           12%
+          </small>
+         </em>
+        </div>
+        <div class="rank">
+         <span>
+          4
+         </span>
+         <div>
+          <strong>
+           Aparecida
+          </strong>
+          <span class="rank-bar">
+           <i style="width:48%">
+           </i>
+          </span>
+         </div>
+         <em>
+          24
+          <small>
+           10%
+          </small>
+         </em>
+        </div>
+       </div>
+      </div>
+      <div class="card chart-card">
+       <div class="chart-heading">
+        <div>
+         <h3>
+          Tipos de ocorrência
+         </h3>
+         <p>
+          Principais motivos registrados
+         </p>
+        </div>
+       </div>
+       <div class="horizontal-bars">
+        <div class="h-bar">
+         <span>
+          <b>
+           Vazamento de esgoto
+          </b>
+          <em>
+           76
+          </em>
+         </span>
+         <i>
+          <u style="width:92%">
+          </u>
+         </i>
+        </div>
+        <div class="h-bar">
+         <span>
+          <b>
+           Bueiro transbordando
+          </b>
+          <em>
+           58
+          </em>
+         </span>
+         <i>
+          <u style="width:70%">
+          </u>
+         </i>
+        </div>
+        <div class="h-bar">
+         <span>
+          <b>
+           Rede obstruída
+          </b>
+          <em>
+           47
+          </em>
+         </span>
+         <i>
+          <u style="width:57%">
+          </u>
+         </i>
+        </div>
+        <div class="h-bar">
+         <span>
+          <b>
+           Mau cheiro
+          </b>
+          <em>
+           39
+          </em>
+         </span>
+         <i>
+          <u style="width:47%">
+          </u>
+         </i>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

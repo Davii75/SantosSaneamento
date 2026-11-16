@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Detalhes do chamado | Santos Saneamento
+  </title>
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="../assets/css/detalhes.css">
+  <script defer="" th:src="@{/js/detalhes.js}">
+  </script>
+ </head>
+ <body class="">
+  <div class="app-shell">
+   <div th:replace="~{fragments/layout :: sidebar('lista',${perfil})}">
+   </div>
+   <div class="main">
+    <header class="topbar">
+     <div>
+      <h1>
+       Detalhes do chamado
+      </h1>
+      <p>
+       Consulte as informações e atualize o atendimento.
+      </p>
+     </div>
+     <div class="top-actions">
+      <span class="live-indicator">
+       <span>
+       </span>
+       Sistema online
+      </span>
+      <span class="header-avatar">
+       ●
+      </span>
+     </div>
+    </header>
+    <div class="page-action">
+     <a class="btn btn-secondary" th:href="${perfil == 'cidadao' ? '/cidadao/chamados' : perfil == 'prefeitura' ? '/prefeitura/chamados' : '/sabesp/chamados'}">
+      ← Voltar
+     </a>
+    </div>
+    <div class="content">
+     <div class="detail-grid">
+      <main class="detail-main">
+       <div class="card detail-hero">
+        <div>
+         <span class="eyebrow">
+          ⚠
+          <span th:text="${#strings.toUpperCase(chamado.tipo)}">
+           OCORRÊNCIA
+          </span>
+         </span>
+         <h2 th:text="${chamado.descricao != null and !chamado.descricao.isBlank() ? chamado.descricao : chamado.tipo}">
+          Detalhes da ocorrência
+         </h2>
+         <p>
+          Enviado em
+          <span th:text="${#temporals.format(chamado.dataHora,'dd/MM/yyyy, HH:mm')}">
+           data
+          </span>
+         </p>
+        </div>
+        <span class="badge" th:text="${chamado.status}">
+         Novo
+        </span>
+       </div>
+       <div class="card info-card">
+        <div class="card-title">
+         <span class="title-icon">
+          ⌖
+         </span>
+         <div>
+          <h3>
+           Local da ocorrência
+          </h3>
+          <p>
+           Dados informados pelo solicitante
+          </p>
+         </div>
+        </div>
+        <div class="map-placeholder">
+         <span class="map-pin">
+          ⌖
+         </span>
+         <span class="map-label">
+          <strong th:text="${chamado.endereco}">
+           Endereço
+          </strong>
+          <small th:text="${chamado.bairro + ', Santos — SP'}">
+           Bairro
+          </small>
+         </span>
+        </div>
+        <div class="info-grid">
+         <div>
+          <small>
+           ENDEREÇO
+          </small>
+          <strong th:text="${chamado.endereco}">
+           Endereço
+          </strong>
+         </div>
+         <div>
+          <small>
+           REFERÊNCIA
+          </small>
+          <strong th:text="${chamado.referencia != null ? chamado.referencia : 'Não informada'}">
+           Referência
+          </strong>
+         </div>
+        </div>
+       </div>
+       <div class="card info-card">
+        <div class="card-title">
+         <span class="title-icon">
+          ✉
+         </span>
+         <div>
+          <h3>
+           Descrição do cidadão
+          </h3>
+          <p>
+           Relato original da solicitação
+          </p>
+         </div>
+        </div>
+        <blockquote th:text="${chamado.descricao != null ? chamado.descricao : 'Nenhuma descrição informada.'}">
+         Descrição da ocorrência
+        </blockquote>
+        <div class="citizen">
+         <span class="avatar citizen-avatar">
+          SS
+         </span>
+         <span>
+          <strong th:text="${chamado.solicitante != null ? chamado.solicitante : 'Solicitante'}">
+           Solicitante
+          </strong>
+          <small>
+           Solicitante
+          </small>
+         </span>
+        </div>
+       </div>
+       <div class="card info-card">
+        <div class="card-title">
+         <span class="title-icon">
+          ▧
+         </span>
+         <div>
+          <h3>
+           Registro fotográfico
+          </h3>
+          <p>
+           Imagem enviada pelo cidadão
+          </p>
+         </div>
+        </div>
+        <div class="photo-placeholder">
+         ▧
+         <span>
+          Imagem não anexada neste registro
+         </span>
+        </div>
+       </div>
+      </main>
+      <aside class="detail-side">
+       <form class="card action-card" method="post" th:action="@{/chamados/atualizar/{id}(id=${chamado.id})}" th:if="${perfil == 'sabesp'}">
+        <span class="role-action-label">
+         ÁREA DE ATENDIMENTO
+        </span>
+        <h3>
+         Atualizar atendimento
+        </h3>
+        <p>
+         Altere a situação conforme o andamento da equipe.
+        </p>
+        <label class="field">
+         <span class="field-label">
+          Situação do chamado
+         </span>
+         <select class="control" name="status" th:value="${chamado.status}">
+          <option th:selected="${chamado.status == 'Novo'}">
+           Novo
+          </option>
+          <option th:selected="${chamado.status == 'Em análise'}">
+           Em análise
+          </option>
+          <option th:selected="${chamado.status == 'Em atendimento'}">
+           Em atendimento
+          </option>
+          <option th:selected="${chamado.status == 'Resolvido'}">
+           Resolvido
+          </option>
+         </select>
+        </label>
+        <label class="field">
+         <span class="field-label">
+          Comentário / parecer
+         </span>
+         <textarea class="control textarea small" name="comentarioSabesp" th:text="${chamado.comentarioSabesp}"></textarea>
+        </label>
+        <input name="perfil" type="hidden" value="sabesp"/>
+        <button class="btn btn-primary wide" type="submit">
+         ✓ Salvar alteração
+        </button>
+       </form>
+       <div class="card action-card read-only-card" th:if="${perfil != 'sabesp'}">
+        <span class="role-action-label">
+         CONSULTA
+        </span>
+        <h3>
+         Situação atual
+        </h3>
+        <span class="badge" th:text="${chamado.status}">
+         Novo
+        </span>
+        <p>
+         As atualizações são realizadas pela equipe operacional responsável.
+        </p>
+        <span class="read-only-notice">
+         Consulta somente leitura
+        </span>
+       </div>
+       <div class="card action-card">
+        <h3>
+         Histórico e comentários
+        </h3>
+        <div class="timeline-item">
+         <span class="timeline-dot">
+         </span>
+         <div>
+          <span class="timeline-meta">
+           <strong>
+            Registro inicial
+           </strong>
+           <small th:text="${#temporals.format(chamado.dataHora,'dd/MM HH:mm')}">
+            data
+           </small>
+          </span>
+          <p>
+           Chamado recebido e encaminhado para a unidade responsável.
+          </p>
+         </div>
+        </div>
+        <div class="timeline-item" th:if="${chamado.comentarioSabesp != null and !chamado.comentarioSabesp.isBlank()}">
+         <span class="timeline-dot">
+         </span>
+         <div>
+          <span class="timeline-meta">
+           <strong>
+            Equipe de atendimento
+           </strong>
+          </span>
+          <p th:text="${chamado.comentarioSabesp}">
+           Comentário
+          </p>
+         </div>
+        </div>
+       </div>
+       <div class="protocol-box">
+        <span>
+         PROTOCOLO
+        </span>
+        <strong th:text="${'#CH-' + chamado.id}">
+         #CH-1048
+        </strong>
+        <small>
+         Guarde este número para consulta
+        </small>
+       </div>
+      </aside>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

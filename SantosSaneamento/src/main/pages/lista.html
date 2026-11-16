@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Fila de atendimento | Santos Saneamento
+  </title>
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="../assets/css/lista.css">
+    <script defer="" th:src="@{/js/lista.js}">
+  </script>
+ </head>
+ <body class="">
+  <div class="app-shell">
+   <div th:replace="~{fragments/layout :: sidebar('lista',${perfil})}">
+   </div>
+   <div class="main">
+    <header class="topbar">
+     <div>
+      <h1 th:text="${perfil == 'prefeitura' ? 'Ocorrências do município' : 'Fila de atendimento'}">
+       Fila de atendimento
+      </h1>
+      <p th:text="${perfil == 'prefeitura' ? 'Consulte e fiscalize o andamento dos chamados em toda a cidade.' : 'Analise, atualize e conclua as solicitações enviadas pelos cidadãos.'}">
+       Descrição
+      </p>
+     </div>
+     <div class="top-actions">
+      <span class="live-indicator">
+       <span>
+       </span>
+       Sistema online
+      </span>
+      <span class="header-avatar">
+       ●
+      </span>
+     </div>
+    </header>
+    <div class="content">
+     <div class="stats-row compact">
+      <div class="card stat-card">
+       <span class="stat-icon tone-blue">
+        ◷
+       </span>
+       <div>
+        <span>
+         Aguardando análise
+        </span>
+        <strong th:text="${novos}">
+         12
+        </strong>
+       </div>
+      </div>
+      <div class="card stat-card">
+       <span class="stat-icon tone-orange">
+        ⚠
+       </span>
+       <div>
+        <span>
+         Em atendimento
+        </span>
+        <strong th:text="${atendimento}">
+         08
+        </strong>
+       </div>
+      </div>
+      <div class="card stat-card">
+       <span class="stat-icon tone-green">
+        ✓
+       </span>
+       <div>
+        <span>
+         Resolvidos
+        </span>
+        <strong th:text="${resolvidos}">
+         47
+        </strong>
+       </div>
+      </div>
+      <div class="card stat-card">
+       <span class="stat-icon tone-purple">
+        ▦
+       </span>
+       <div>
+        <span>
+         Total de chamados
+        </span>
+        <strong th:text="${total}">
+         68
+        </strong>
+       </div>
+      </div>
+     </div>
+     <div class="card list-card">
+      <div class="table-tools">
+       <label class="search-box">
+        ⌕
+        <input id="tableSearch" placeholder="Buscar por protocolo, endereço ou bairro..."/>
+       </label>
+       <div class="tool-select">
+        ☷
+        <select class="control" id="statusFilter">
+         <option value="">
+          Todos os status
+         </option>
+         <option>
+          Novo
+         </option>
+         <option>
+          Em análise
+         </option>
+         <option>
+          Em atendimento
+         </option>
+         <option>
+          Resolvido
+         </option>
+        </select>
+       </div>
+       <a class="btn btn-secondary" th:href="@{/prefeitura/painel}">
+        Painel
+       </a>
+      </div>
+      <div class="table-wrap">
+       <table>
+        <thead>
+         <tr>
+          <th>
+           Protocolo
+          </th>
+          <th>
+           Ocorrência
+          </th>
+          <th>
+           Localização
+          </th>
+          <th>
+           Data
+          </th>
+          <th>
+           Status
+          </th>
+          <th>
+           Ações
+          </th>
+         </tr>
+        </thead>
+        <tbody id="callsTable">
+         <tr th:attr="data-search=${(chamado.id + ' ' + chamado.endereco + ' ' + chamado.bairro + ' ' + chamado.tipo).toLowerCase()},data-status=${chamado.status}" th:each="chamado : ${chamados}">
+          <td>
+           <strong class="protocol" th:text="${'#CH-' + chamado.id}">
+            #CH-1048
+           </strong>
+          </td>
+          <td>
+           <strong th:text="${chamado.tipo}">
+            Vazamento
+           </strong>
+           <small th:text="${chamado.solicitante}">
+            Solicitante
+           </small>
+          </td>
+          <td>
+           <strong th:text="${chamado.bairro}">
+            Boqueirão
+           </strong>
+           <small th:text="${chamado.endereco}">
+            Endereço
+           </small>
+          </td>
+          <td>
+           <strong th:text="${#temporals.format(chamado.dataHora,'dd/MM/yyyy')}">
+            23/05/2025
+           </strong>
+           <small th:text="${#temporals.format(chamado.dataHora,'HH:mm')}">
+            09:42
+           </small>
+          </td>
+          <td>
+           <span class="badge" th:text="${chamado.status}">
+            Novo
+           </span>
+          </td>
+          <td>
+           <a class="table-action" th:href="@{/chamados/detalhes/{id}(id=${chamado.id},perfil=${perfil})}">
+            →
+           </a>
+           <a class="table-action" th:href="@{/chamados/editar/{id}(id=${chamado.id})}">
+            ✎
+           </a>
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <div class="table-footer">
+       <span id="visibleCount">
+        Chamados cadastrados
+       </span>
+       <a th:href="@{/chamados/novo}">
+        ＋ Novo chamado
+       </a>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

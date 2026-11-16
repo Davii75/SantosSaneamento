@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Registrar novo chamado | Santos Saneamento
+  </title>
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="../assets/css/registro.css">
+  <script defer="" th:src="@{/js/registro.js}">
+  </script>
+ </head>
+ <body class="">
+  <div class="app-shell">
+   <div th:replace="~{fragments/layout :: sidebar('registro','cidadao')}">
+   </div>
+   <div class="main">
+    <header class="topbar">
+     <div>
+      <h1>
+       Registrar novo chamado
+      </h1>
+      <p>
+       Informe os dados do problema para que nossa equipe possa atendê-lo.
+      </p>
+     </div>
+     <div class="top-actions">
+      <span class="live-indicator">
+       <span>
+       </span>
+       Sistema online
+      </span>
+      <span class="header-avatar">
+       ●
+      </span>
+     </div>
+    </header>
+    <div class="content">
+     <div class="form-layout">
+      <form class="card form-card" id="registerForm" method="post" th:action="@{/chamados/salvar}" th:object="${chamado}">
+       <input th:field="*{id}" type="hidden"/>
+       <input th:field="*{status}" type="hidden"/>
+       <input th:field="*{comentarioSabesp}" type="hidden"/>
+       <input th:field="*{imagem}" type="hidden"/>
+       <div class="section-heading">
+        <span class="step">
+         01
+        </span>
+        <div>
+         <h2 th:text="${chamado.id == null ? 'Localização do problema' : 'Editar localização do chamado'}">
+          Localização do problema
+         </h2>
+         <p>
+          Preencha o endereço com o máximo de detalhes.
+         </p>
+        </div>
+       </div>
+       <div class="field-grid full">
+        <label class="field">
+         <span class="field-label">
+          Endereço
+         </span>
+         <input class="control" placeholder="Ex.: Av. Conselheiro Nébias, 542" required="" th:field="*{endereco}"/>
+        </label>
+       </div>
+       <div class="field-grid">
+        <label class="field">
+         <span class="field-label">
+          Bairro
+         </span>
+         <select class="control" th:field="*{bairro}">
+          <option value="">
+           Selecione o bairro
+          </option>
+          <option>
+           Boqueirão
+          </option>
+          <option>
+           Centro
+          </option>
+          <option>
+           Gonzaga
+          </option>
+          <option>
+           Aparecida
+          </option>
+          <option>
+           Vila Belmiro
+          </option>
+         </select>
+        </label>
+        <label class="field">
+         <span class="field-label">
+          Ponto de referência
+         </span>
+         <input class="control" placeholder="Ex.: próximo à farmácia" th:field="*{referencia}"/>
+        </label>
+       </div>
+       <div class="divider">
+       </div>
+       <div class="section-heading">
+        <span class="step">
+         02
+        </span>
+        <div>
+         <h2>
+          Detalhes da ocorrência
+         </h2>
+         <p>
+          Conte-nos o que está acontecendo.
+         </p>
+        </div>
+       </div>
+       <div class="field-grid">
+        <label class="field">
+         <span class="field-label">
+          Tipo de problema
+         </span>
+         <select class="control" required="" th:field="*{tipo}">
+          <option value="">
+           Selecione uma opção
+          </option>
+          <option>
+           Vazamento de esgoto
+          </option>
+          <option>
+           Bueiro transbordando
+          </option>
+          <option>
+           Rede obstruída
+          </option>
+          <option>
+           Mau cheiro
+          </option>
+          <option>
+           Outros
+          </option>
+         </select>
+        </label>
+        <label class="field">
+         <span class="field-label">
+          Nome do solicitante
+         </span>
+         <input class="control" placeholder="Seu nome" th:field="*{solicitante}"/>
+        </label>
+       </div>
+       <label class="field">
+        <span class="field-label">
+         Descrição
+        </span>
+        <textarea class="control textarea" id="description" maxlength="500" placeholder="Descreva o problema e há quanto tempo ele ocorre..." th:field="*{descricao}"></textarea>
+        <span class="counter" id="descriptionCounter">
+         0 / 500
+        </span>
+       </label>
+       <label class="field">
+        <span class="field-label">
+         Foto do local (opcional)
+        </span>
+        <label class="upload">
+         <input accept="image/png,image/jpeg" id="photo" type="file"/>
+         <span class="upload-icon">
+          ♧
+         </span>
+         <span>
+          <strong id="fileName">
+           Adicione uma foto do problema
+          </strong>
+          <small>
+           JPG ou PNG, até 5 MB
+          </small>
+         </span>
+        </label>
+       </label>
+       <div class="form-footer">
+        <p>
+         ♢ Seus dados serão usados apenas para o atendimento.
+        </p>
+        <button class="btn btn-primary" type="submit">
+         <span th:text="${chamado.id == null ? 'Registrar chamado →' : 'Salvar alterações →'}">
+          Registrar chamado →
+         </span>
+        </button>
+       </div>
+      </form>
+      <aside class="help-card">
+       <div class="help-visual">
+        <span class="ripple r1">
+        </span>
+        <span class="ripple r2">
+        </span>
+        <span class="help-icon">
+         ✉
+        </span>
+       </div>
+       <h3>
+        Antes de registrar
+       </h3>
+       <ul>
+        <li>
+         <span>
+          1
+         </span>
+         Confirme se o endereço está correto.
+        </li>
+        <li>
+         <span>
+          2
+         </span>
+         Descreva o problema com clareza.
+        </li>
+        <li>
+         <span>
+          3
+         </span>
+         Uma foto ajuda a agilizar o atendimento.
+        </li>
+       </ul>
+       <div class="emergency">
+        ⚠
+        <span>
+         <strong>
+          Risco imediato?
+         </strong>
+         <small>
+          Ligue para 0800 055 0195
+         </small>
+        </span>
+       </div>
+      </aside>
+     </div>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

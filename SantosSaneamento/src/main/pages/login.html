@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Acessar o sistema | Santos Saneamento
+  </title>
+  <link rel="stylesheet" href="../assets/css/app.css">
+  <link rel="stylesheet" href="../assets/css/login.css">
+  <script defer="" th:src="@{/js/login.js}">
+  </script>
+ </head>
+ <body class="">
+  <main class="login-page">
+   <section class="login-brand">
+    <div class="login-logo">
+     <div class="logo">
+      <span class="logo-mark">
+       <span>
+       </span>
+       <span>
+       </span>
+       <span>
+       </span>
+      </span>
+      <span>
+       <strong>
+        Santos
+       </strong>
+       <small>
+        Meio Ambiente
+       </small>
+      </span>
+     </div>
+    </div>
+    <div class="brand-copy">
+     <span class="brand-tag">
+      GESTÃO AMBIENTAL INTEGRADA
+     </span>
+     <h1>
+      Cuidar de Santos
+      <br/>
+      é cuidar de
+      <em>
+       todos.
+      </em>
+     </h1>
+     <p>
+      Uma plataforma integrada para registrar, acompanhar e solucionar ocorrências de saneamento na cidade.
+     </p>
+    </div>
+    <div class="brand-stats">
+     <span>
+      <strong>
+       24h
+      </strong>
+      <small>
+       Canal disponível
+      </small>
+     </span>
+     <span>
+      <strong>
+       87%
+      </strong>
+      <small>
+       Taxa de resolução
+      </small>
+     </span>
+     <span>
+      <strong>
+       2,4
+      </strong>
+      <small>
+       Dias em média
+      </small>
+     </span>
+    </div>
+    <div class="wave wave-one">
+    </div>
+    <div class="wave wave-two">
+    </div>
+    <small class="brand-footer">
+     Prefeitura de Santos · Sabesp
+    </small>
+   </section>
+   <section class="login-form-wrap">
+    <div class="login-form">
+     <span class="login-mobile-logo">
+      <div class="logo">
+       <span class="logo-mark">
+        <span>
+        </span>
+        <span>
+        </span>
+        <span>
+        </span>
+       </span>
+       <span>
+        <strong>
+         Santos
+        </strong>
+        <small>
+         Meio Ambiente
+        </small>
+       </span>
+      </div>
+     </span>
+     <span class="welcome-icon">
+      ♢
+     </span>
+     <h2>
+      Acessar o sistema
+     </h2>
+     <p>
+      Escolha o seu perfil para entrar na área correta.
+     </p>
+     <form id="loginForm" method="post" th:action="@{/entrar}">
+      <div class="role-selector">
+       <label class="role-option selected">
+        <input checked="" name="perfil" type="radio" value="cidadao"/>
+        <span>
+         ♙
+        </span>
+        <strong>
+         Cidadão
+        </strong>
+        <small>
+         Registrar e acompanhar
+        </small>
+       </label>
+       <label class="role-option">
+        <input name="perfil" type="radio" value="sabesp"/>
+        <span>
+         ♧
+        </span>
+        <strong>
+         Sabesp
+        </strong>
+        <small>
+         Atender chamados
+        </small>
+       </label>
+       <label class="role-option">
+        <input name="perfil" type="radio" value="prefeitura"/>
+        <span>
+         ▦
+        </span>
+        <strong>
+         Prefeitura
+        </strong>
+        <small>
+         Fiscalizar e analisar
+        </small>
+       </label>
+      </div>
+      <label class="field">
+       <span class="field-label">
+        E-mail ou CPF
+       </span>
+       <div class="input-icon">
+        ♙
+        <input class="control" name="usuario" placeholder="Informe seu acesso" type="text"/>
+       </div>
+      </label>
+      <label class="field">
+       <span class="field-label">
+        Senha
+       </span>
+       <div class="input-icon password">
+        ♢
+        <input class="control" id="password" name="senha" placeholder="Digite sua senha" type="password"/>
+        <button aria-label="Mostrar senha" id="togglePassword" type="button">
+         ◉
+        </button>
+       </div>
+      </label>
+      <div class="login-options">
+       <label>
+        <input checked="" type="checkbox"/>
+        Lembrar de mim
+       </label>
+       <button id="forgotPassword" type="button">
+        Esqueci minha senha
+       </button>
+      </div>
+      <button class="btn btn-primary wide login-button" type="submit">
+       Entrar
+       <span>
+        →
+       </span>
+      </button>
+     </form>
+     <small class="secure-note">
+      ♢ Ambiente seguro e protegido
+     </small>
+    </div>
+   </section>
+  </main>
+ </body>
+
+</html>
