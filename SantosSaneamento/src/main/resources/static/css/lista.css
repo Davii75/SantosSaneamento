@@ -18,3 +18,6 @@
 .search-box { flex-basis: 100%; }
 .tool-select { flex: 1; }
 }
+.table-tools { flex-wrap: wrap; }
+.search-box { flex: 1 1 260px; }
+.tool-select.sem-icone .control { padding-left: 13px; }

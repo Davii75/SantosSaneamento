@@ -6,14 +6,14 @@
   <title>
    Detalhes do chamado | Santos Saneamento
   </title>
-  <link rel="stylesheet" href="../assets/css/app.css">
-  <link rel="stylesheet" href="../assets/css/detalhes.css">
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <link rel="stylesheet" th:href="@{/css/detalhes.css}">
   <script defer="" th:src="@{/js/detalhes.js}">
   </script>
  </head>
  <body class="">
   <div class="app-shell">
-   <div th:replace="~{fragments/layout :: sidebar('lista',${perfil})}">
+   <div th:replace="~{fragments/layout :: sidebar(${perfil == 'cidadao' ? 'acompanhamento' : 'lista'})}">
    </div>
    <div class="main">
     <header class="topbar">
@@ -31,8 +31,8 @@
        </span>
        Sistema online
       </span>
-      <span class="header-avatar">
-       ●
+      <span class="header-avatar" th:text="${usuario.iniciais}">
+       MS
       </span>
      </div>
     </header>
@@ -40,8 +40,18 @@
      <a class="btn btn-secondary" th:href="${perfil == 'cidadao' ? '/cidadao/chamados' : perfil == 'prefeitura' ? '/prefeitura/chamados' : '/sabesp/chamados'}">
       ← Voltar
      </a>
+     <a class="btn btn-primary" th:href="@{/chamados/editar/{id}(id=${chamado.id})}" th:if="${podeEditar}">
+      ✎ Editar chamado
+     </a>
+     <form method="post" onsubmit="return confirm('Deseja realmente excluir este chamado?')" th:action="@{/chamados/excluir/{id}(id=${chamado.id})}" th:if="${perfil == 'prefeitura'}">
+      <button class="btn btn-danger" type="submit">
+       Excluir
+      </button>
+     </form>
     </div>
     <div class="content">
+     <div class="alert-ok" th:if="${sucesso != null}" th:text="'✓ ' + ${sucesso}">
+     </div>
      <div class="detail-grid">
       <main class="detail-main">
        <div class="card detail-hero">
@@ -62,7 +72,7 @@
           </span>
          </p>
         </div>
-        <span class="badge" th:text="${chamado.status}">
+        <span class="badge" th:classappend="${chamado.statusClasse}" th:text="${chamado.status}">
          Novo
         </span>
        </div>
@@ -157,7 +167,8 @@
           </p>
          </div>
         </div>
-        <div class="photo-placeholder">
+        <img alt="Foto do local" class="foto-chamado" th:if="${chamado.imagem != null and !chamado.imagem.isBlank()}" th:src="@{/uploads/{f}(f=${chamado.imagem})}"/>
+        <div class="photo-placeholder" th:unless="${chamado.imagem != null and !chamado.imagem.isBlank()}">
          ▧
          <span>
           Imagem não anexada neste registro
@@ -180,18 +191,8 @@
          <span class="field-label">
           Situação do chamado
          </span>
-         <select class="control" name="status" th:value="${chamado.status}">
-          <option th:selected="${chamado.status == 'Novo'}">
-           Novo
-          </option>
-          <option th:selected="${chamado.status == 'Em análise'}">
-           Em análise
-          </option>
-          <option th:selected="${chamado.status == 'Em atendimento'}">
-           Em atendimento
-          </option>
-          <option th:selected="${chamado.status == 'Resolvido'}">
-           Resolvido
+         <select class="control" name="status">
+          <option th:each="st : ${statusLista}" th:selected="${st == chamado.status}" th:text="${st}" th:value="${st}">
           </option>
          </select>
         </label>
@@ -199,9 +200,9 @@
          <span class="field-label">
           Comentário / parecer
          </span>
-         <textarea class="control textarea small" name="comentarioSabesp" th:text="${chamado.comentarioSabesp}"></textarea>
+         <textarea class="control textarea small" maxlength="1500" name="comentarioSabesp" placeholder="Escreva um comentário sobre o atendimento..." th:text="${chamado.comentarioSabesp}"></textarea>
         </label>
-        <input name="perfil" type="hidden" value="sabesp"/>
+        
         <button class="btn btn-primary wide" type="submit">
          ✓ Salvar alteração
         </button>
@@ -213,7 +214,7 @@
         <h3>
          Situação atual
         </h3>
-        <span class="badge" th:text="${chamado.status}">
+        <span class="badge" th:classappend="${chamado.statusClasse}" th:text="${chamado.status}">
          Novo
         </span>
         <p>

@@ -70,3 +70,4 @@
 @media (max-width: 480px) {
 .access-types { grid-template-columns: 1fr; }
 }
+.role-option input { position: absolute; opacity: 0; pointer-events: none; }

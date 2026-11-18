@@ -6,14 +6,14 @@
   <title>
    Meus chamados | Santos Saneamento
   </title>
-  <link rel="stylesheet" href="../assets/css/app.css">
-  <link rel="stylesheet" href="../assets/css/acompanhamento.css">
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <link rel="stylesheet" th:href="@{/css/acompanhamento.css}">
   <script defer="" th:src="@{/js/acompanhamento.js}">
   </script>
  </head>
  <body class="">
   <div class="app-shell">
-   <div th:replace="~{fragments/layout :: sidebar('acompanhamento','cidadao')}">
+   <div th:replace="~{fragments/layout :: sidebar('acompanhamento')}">
    </div>
    <div class="main">
     <header class="topbar">
@@ -31,8 +31,8 @@
        </span>
        Sistema online
       </span>
-      <span class="header-avatar">
-       ●
+      <span class="header-avatar" th:text="${usuario.iniciais}">
+       MO
       </span>
      </div>
     </header>
@@ -42,6 +42,8 @@
      </a>
     </div>
     <div class="content">
+     <div class="alert-ok" th:if="${sucesso != null}" th:text="'✓ ' + ${sucesso}">
+     </div>
      <div class="citizen-summary card">
       <div>
        <span class="summary-icon">
@@ -97,7 +99,7 @@
       </span>
      </div>
      <div class="tracking-list">
-      <a class="tracking-card card" th:each="chamado : ${chamados}" th:href="@{/chamados/detalhes/{id}(id=${chamado.id},perfil='cidadao')}">
+      <a class="tracking-card card" th:each="chamado : ${chamados}" th:href="@{/chamados/detalhes/{id}(id=${chamado.id})}">
        <span class="tracking-mark">
         <span>
          !
@@ -108,7 +110,7 @@
          <strong th:text="${chamado.tipo}">
           Tipo de ocorrência
          </strong>
-         <span class="badge" th:text="${chamado.status}">
+         <span class="badge" th:classappend="${chamado.statusClasse}" th:text="${chamado.status}">
           Novo
          </span>
         </span>
@@ -135,6 +137,9 @@
         →
        </span>
       </a>
+     </div>
+     <div class="card" style="padding:26px;text-align:center;color:var(--muted);font-size:12px" th:if="${#lists.isEmpty(chamados)}">
+      Você ainda não registrou nenhum chamado.
      </div>
      <div class="citizen-help">
       ✉

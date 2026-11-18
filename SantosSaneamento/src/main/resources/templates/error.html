@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Ops! | Santos Saneamento
+  </title>
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+ </head>
+ <body>
+  <main style="min-height:100vh;display:grid;place-items:center;padding:24px">
+   <div class="card" style="max-width:440px;padding:36px;text-align:center">
+    <h1 style="font:800 40px Manrope,sans-serif;color:var(--blue-950);margin:0" th:text="${status != null ? status : 'Erro'}">
+     404
+    </h1>
+    <h2 style="font:700 18px Manrope,sans-serif;color:var(--blue-950)" th:text="${status == 404 ? 'Página ou chamado não encontrado' : 'Não foi possível concluir a ação'}">
+     Página ou chamado não encontrado
+    </h2>
+    <p style="color:var(--muted);font-size:13px;line-height:1.6">
+     Volte para o início e tente novamente. Se o problema continuar, avise a equipe responsável pelo sistema.
+    </p>
+    <a class="btn btn-primary" th:href="@{/}">
+     Voltar ao início
+    </a>
+   </div>
+  </main>
+ </body>
+</html>

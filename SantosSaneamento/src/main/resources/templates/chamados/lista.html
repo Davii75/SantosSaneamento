@@ -6,14 +6,14 @@
   <title>
    Fila de atendimento | Santos Saneamento
   </title>
-  <link rel="stylesheet" href="../assets/css/app.css">
-  <link rel="stylesheet" href="../assets/css/lista.css">
-    <script defer="" th:src="@{/js/lista.js}">
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <link rel="stylesheet" th:href="@{/css/lista.css}">
+  <script defer="" th:src="@{/js/lista.js}">
   </script>
  </head>
- <body class="">
+ <body>
   <div class="app-shell">
-   <div th:replace="~{fragments/layout :: sidebar('lista',${perfil})}">
+   <div th:replace="~{fragments/layout :: sidebar('lista')}">
    </div>
    <div class="main">
     <header class="topbar">
@@ -31,12 +31,14 @@
        </span>
        Sistema online
       </span>
-      <span class="header-avatar">
-       ●
+      <span class="header-avatar" th:text="${usuario.iniciais}">
+       MS
       </span>
      </div>
     </header>
     <div class="content">
+     <div class="alert-ok" th:if="${sucesso != null}" th:text="'✓ ' + ${sucesso}">
+     </div>
      <div class="stats-row compact">
       <div class="card stat-card">
        <span class="stat-icon tone-blue">
@@ -92,35 +94,49 @@
       </div>
      </div>
      <div class="card list-card">
-      <div class="table-tools">
+      <!-- Filtros: enviados por GET e aplicados no servidor (ChamadoService.filtrar) -->
+      <form class="table-tools" id="filtros" method="get" th:action="@{/chamados}">
        <label class="search-box">
         ⌕
-        <input id="tableSearch" placeholder="Buscar por protocolo, endereço ou bairro..."/>
+        <input name="busca" placeholder="Buscar por protocolo, endereço ou bairro..." th:value="${busca}"/>
        </label>
-       <div class="tool-select">
-        ☷
-        <select class="control" id="statusFilter">
+       <div class="tool-select sem-icone">
+        <select class="control" name="status">
          <option value="">
           Todos os status
          </option>
-         <option>
-          Novo
-         </option>
-         <option>
-          Em análise
-         </option>
-         <option>
-          Em atendimento
-         </option>
-         <option>
-          Resolvido
+         <option th:each="s : ${statusLista}" th:selected="${s == statusSel}" th:text="${s}" th:value="${s}">
          </option>
         </select>
        </div>
-       <a class="btn btn-secondary" th:href="@{/prefeitura/painel}">
+       <div class="tool-select sem-icone">
+        <select class="control" name="bairro">
+         <option value="">
+          Todos os bairros
+         </option>
+         <option th:each="b : ${bairros}" th:selected="${b == bairroSel}" th:text="${b}" th:value="${b}">
+         </option>
+        </select>
+       </div>
+       <div class="tool-select sem-icone">
+        <select class="control" name="tipo">
+         <option value="">
+          Todos os tipos
+         </option>
+         <option th:each="t : ${tipos}" th:selected="${t == tipoSel}" th:text="${t}" th:value="${t}">
+         </option>
+        </select>
+       </div>
+       <button class="btn btn-primary" type="submit">
+        Filtrar
+       </button>
+       <a class="btn btn-secondary" th:href="@{/chamados}">
+        Limpar
+       </a>
+       <a class="btn btn-secondary" th:href="@{/prefeitura/painel}" th:if="${perfil == 'prefeitura'}">
         Painel
        </a>
-      </div>
+      </form>
       <div class="table-wrap">
        <table>
         <thead>
@@ -146,7 +162,7 @@
          </tr>
         </thead>
         <tbody id="callsTable">
-         <tr th:attr="data-search=${(chamado.id + ' ' + chamado.endereco + ' ' + chamado.bairro + ' ' + chamado.tipo).toLowerCase()},data-status=${chamado.status}" th:each="chamado : ${chamados}">
+         <tr th:each="chamado : ${chamados}">
           <td>
            <strong class="protocol" th:text="${'#CH-' + chamado.id}">
             #CH-1048
@@ -177,29 +193,28 @@
            </small>
           </td>
           <td>
-           <span class="badge" th:text="${chamado.status}">
+           <span class="badge" th:classappend="${chamado.statusClasse}" th:text="${chamado.status}">
             Novo
            </span>
           </td>
           <td>
-           <a class="table-action" th:href="@{/chamados/detalhes/{id}(id=${chamado.id},perfil=${perfil})}">
+           <a class="table-action" th:href="@{/chamados/detalhes/{id}(id=${chamado.id})}" title="Ver detalhes">
             →
            </a>
-           <a class="table-action" th:href="@{/chamados/editar/{id}(id=${chamado.id})}">
-            ✎
-           </a>
+          </td>
+         </tr>
+         <tr th:if="${#lists.isEmpty(chamados)}">
+          <td class="text-center" colspan="6" style="text-align:center;color:var(--muted)">
+           Nenhum chamado encontrado.
           </td>
          </tr>
         </tbody>
        </table>
       </div>
       <div class="table-footer">
-       <span id="visibleCount">
+       <span th:text="${'Mostrando ' + #lists.size(chamados) + ' de ' + total + ' chamado(s)'}">
         Chamados cadastrados
        </span>
-       <a th:href="@{/chamados/novo}">
-        ＋ Novo chamado
-       </a>
       </div>
      </div>
     </div>

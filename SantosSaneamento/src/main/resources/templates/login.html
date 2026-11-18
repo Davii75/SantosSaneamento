@@ -6,8 +6,8 @@
   <title>
    Acessar o sistema | Santos Saneamento
   </title>
-  <link rel="stylesheet" href="../assets/css/app.css">
-  <link rel="stylesheet" href="../assets/css/login.css">
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <link rel="stylesheet" th:href="@{/css/login.css}">
   <script defer="" th:src="@{/js/login.js}">
   </script>
  </head>
@@ -118,7 +118,7 @@
      <form id="loginForm" method="post" th:action="@{/entrar}">
       <div class="role-selector">
        <label class="role-option selected">
-        <input checked="" name="perfil" type="radio" value="cidadao"/>
+        <input checked="" data-email="cidadao@santos.sp.gov.br" data-senha="cidadao123" name="perfil" type="radio" value="cidadao"/>
         <span>
          ♙
         </span>
@@ -130,7 +130,7 @@
         </small>
        </label>
        <label class="role-option">
-        <input name="perfil" type="radio" value="sabesp"/>
+        <input data-email="operador@sabesp.com.br" data-senha="sabesp123" name="perfil" type="radio" value="sabesp"/>
         <span>
          ♧
         </span>
@@ -142,7 +142,7 @@
         </small>
        </label>
        <label class="role-option">
-        <input name="perfil" type="radio" value="prefeitura"/>
+        <input data-email="gestor@santos.sp.gov.br" data-senha="prefeitura123" name="perfil" type="radio" value="prefeitura"/>
         <span>
          ▦
         </span>
@@ -154,13 +154,19 @@
         </small>
        </label>
       </div>
+      <div class="alert-erro" th:if="${param.erro}">
+       ⚠ E-mail ou senha inválidos.
+      </div>
+      <div class="alert-erro" th:if="${param.acesso}">
+       ⚠ Você não tem permissão para acessar essa página.
+      </div>
       <label class="field">
        <span class="field-label">
-        E-mail ou CPF
+        E-mail
        </span>
        <div class="input-icon">
         ♙
-        <input class="control" name="usuario" placeholder="Informe seu acesso" type="text"/>
+        <input class="control" id="email" name="email" placeholder="Informe seu e-mail" required="" type="email"/>
        </div>
       </label>
       <label class="field">
@@ -169,7 +175,7 @@
        </span>
        <div class="input-icon password">
         ♢
-        <input class="control" id="password" name="senha" placeholder="Digite sua senha" type="password"/>
+        <input class="control" id="password" name="senha" placeholder="Digite sua senha" required="" type="password"/>
         <button aria-label="Mostrar senha" id="togglePassword" type="button">
          ◉
         </button>

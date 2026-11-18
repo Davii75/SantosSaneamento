@@ -3,22 +3,22 @@
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>
+  <title th:text="${titulo + ' | Santos Saneamento'}">
    Registrar novo chamado | Santos Saneamento
   </title>
-  <link rel="stylesheet" href="../assets/css/app.css">
-  <link rel="stylesheet" href="../assets/css/registro.css">
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <link rel="stylesheet" th:href="@{/css/registro.css}">
   <script defer="" th:src="@{/js/registro.js}">
   </script>
  </head>
- <body class="">
+ <body>
   <div class="app-shell">
-   <div th:replace="~{fragments/layout :: sidebar('registro','cidadao')}">
+   <div th:replace="~{fragments/layout :: sidebar('registro')}">
    </div>
    <div class="main">
     <header class="topbar">
      <div>
-      <h1>
+      <h1 th:text="${titulo}">
        Registrar novo chamado
       </h1>
       <p>
@@ -31,24 +31,31 @@
        </span>
        Sistema online
       </span>
-      <span class="header-avatar">
-       ●
+      <span class="header-avatar" th:text="${usuario.iniciais}">
+       MO
       </span>
      </div>
     </header>
     <div class="content">
      <div class="form-layout">
-      <form class="card form-card" id="registerForm" method="post" th:action="@{/chamados/salvar}" th:object="${chamado}">
+      <form class="card form-card" enctype="multipart/form-data" id="registerForm" method="post" th:action="@{/chamados/salvar}" th:object="${chamado}">
        <input th:field="*{id}" type="hidden"/>
-       <input th:field="*{status}" type="hidden"/>
-       <input th:field="*{comentarioSabesp}" type="hidden"/>
-       <input th:field="*{imagem}" type="hidden"/>
+
+       <div class="alert-erro" th:if="${param.fotoGrande}">
+        ⚠ A foto é maior que 5 MB. Escolha uma imagem menor.
+       </div>
+       <div class="alert-erro" th:if="${erroFoto != null}" th:text="'⚠ ' + ${erroFoto}">
+       </div>
+       <div class="alert-erro" th:if="${#fields.hasErrors('*')}">
+        ⚠ Confira os campos destacados abaixo.
+       </div>
+
        <div class="section-heading">
         <span class="step">
          01
         </span>
         <div>
-         <h2 th:text="${chamado.id == null ? 'Localização do problema' : 'Editar localização do chamado'}">
+         <h2>
           Localização do problema
          </h2>
          <p>
@@ -61,7 +68,9 @@
          <span class="field-label">
           Endereço
          </span>
-         <input class="control" placeholder="Ex.: Av. Conselheiro Nébias, 542" required="" th:field="*{endereco}"/>
+         <input class="control" maxlength="150" placeholder="Ex.: Av. Conselheiro Nébias, 542" required="" th:errorclass="campo-invalido" th:field="*{endereco}"/>
+         <span class="erro-campo" th:errors="*{endereco}" th:if="${#fields.hasErrors('endereco')}">
+         </span>
         </label>
        </div>
        <div class="field-grid">
@@ -69,32 +78,23 @@
          <span class="field-label">
           Bairro
          </span>
-         <select class="control" th:field="*{bairro}">
+         <select class="control" required="" th:errorclass="campo-invalido" th:field="*{bairro}">
           <option value="">
            Selecione o bairro
           </option>
-          <option>
-           Boqueirão
-          </option>
-          <option>
-           Centro
-          </option>
-          <option>
-           Gonzaga
-          </option>
-          <option>
-           Aparecida
-          </option>
-          <option>
-           Vila Belmiro
+          <option th:each="b : ${bairros}" th:text="${b}" th:value="${b}">
           </option>
          </select>
+         <span class="erro-campo" th:errors="*{bairro}" th:if="${#fields.hasErrors('bairro')}">
+         </span>
         </label>
         <label class="field">
          <span class="field-label">
           Ponto de referência
          </span>
-         <input class="control" placeholder="Ex.: próximo à farmácia" th:field="*{referencia}"/>
+         <input class="control" maxlength="150" placeholder="Ex.: próximo à farmácia" th:errorclass="campo-invalido" th:field="*{referencia}"/>
+         <span class="erro-campo" th:errors="*{referencia}" th:if="${#fields.hasErrors('referencia')}">
+         </span>
         </label>
        </div>
        <div class="divider">
@@ -117,41 +117,37 @@
          <span class="field-label">
           Tipo de problema
          </span>
-         <select class="control" required="" th:field="*{tipo}">
+         <select class="control" required="" th:errorclass="campo-invalido" th:field="*{tipo}">
           <option value="">
            Selecione uma opção
           </option>
-          <option>
-           Vazamento de esgoto
-          </option>
-          <option>
-           Bueiro transbordando
-          </option>
-          <option>
-           Rede obstruída
-          </option>
-          <option>
-           Mau cheiro
-          </option>
-          <option>
-           Outros
+          <option th:each="t : ${tipos}" th:text="${t}" th:value="${t}">
           </option>
          </select>
-        </label>
-        <label class="field">
-         <span class="field-label">
-          Nome do solicitante
+         <span class="erro-campo" th:errors="*{tipo}" th:if="${#fields.hasErrors('tipo')}">
          </span>
-         <input class="control" placeholder="Seu nome" th:field="*{solicitante}"/>
         </label>
+        <div class="field">
+         <span class="field-label">
+          Data e hora
+         </span>
+         <div class="date-row">
+          <input class="control" name="data" required="" th:value="${dataValor}" type="date"/>
+          <input class="control" name="hora" required="" th:value="${horaValor}" type="time"/>
+         </div>
+         <span class="erro-campo" th:errors="*{dataHora}" th:if="${#fields.hasErrors('dataHora')}">
+         </span>
+        </div>
        </div>
        <label class="field">
         <span class="field-label">
          Descrição
         </span>
-        <textarea class="control textarea" id="description" maxlength="500" placeholder="Descreva o problema e há quanto tempo ele ocorre..." th:field="*{descricao}"></textarea>
+        <textarea class="control textarea" id="description" maxlength="500" placeholder="Descreva o problema e há quanto tempo ele ocorre..." th:errorclass="campo-invalido" th:field="*{descricao}"></textarea>
         <span class="counter" id="descriptionCounter">
          0 / 500
+        </span>
+        <span class="erro-campo" th:errors="*{descricao}" th:if="${#fields.hasErrors('descricao')}">
         </span>
        </label>
        <label class="field">
@@ -159,7 +155,7 @@
          Foto do local (opcional)
         </span>
         <label class="upload">
-         <input accept="image/png,image/jpeg" id="photo" type="file"/>
+         <input accept="image/png,image/jpeg" id="photo" name="foto" type="file"/>
          <span class="upload-icon">
           ♧
          </span>
@@ -167,7 +163,7 @@
           <strong id="fileName">
            Adicione uma foto do problema
           </strong>
-          <small>
+          <small id="fileHint">
            JPG ou PNG, até 5 MB
           </small>
          </span>
@@ -177,11 +173,16 @@
         <p>
          ♢ Seus dados serão usados apenas para o atendimento.
         </p>
-        <button class="btn btn-primary" type="submit">
-         <span th:text="${chamado.id == null ? 'Registrar chamado →' : 'Salvar alterações →'}">
-          Registrar chamado →
-         </span>
-        </button>
+        <span class="form-buttons">
+         <a class="btn btn-secondary" th:href="@{/cidadao/chamados}" th:if="${chamado.id != null}">
+          Cancelar
+         </a>
+         <button class="btn btn-primary" type="submit">
+          <span th:text="${chamado.id == null ? 'Registrar chamado →' : 'Salvar alterações →'}">
+           Registrar chamado →
+          </span>
+         </button>
+        </span>
        </div>
       </form>
       <aside class="help-card">

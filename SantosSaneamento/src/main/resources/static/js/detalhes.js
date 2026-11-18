@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('form').forEach((form) => {
+    // Evita duplo clique só no formulário de atendimento da Sabesp
+    document.querySelectorAll('form.action-card').forEach((form) => {
         form.addEventListener('submit', () => {
             const submitButton = form.querySelector('button[type="submit"]');
             if (!submitButton) return;

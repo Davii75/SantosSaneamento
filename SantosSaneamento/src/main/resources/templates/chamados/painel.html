@@ -6,14 +6,14 @@
   <title>
    Painel de acompanhamento | Santos Saneamento
   </title>
-  <link rel="stylesheet" href="../assets/css/app.css">
-  <link rel="stylesheet" href="../assets/css/painel.css">
+  <link rel="stylesheet" th:href="@{/css/app.css}">
+  <link rel="stylesheet" th:href="@{/css/painel.css}">
   <script defer="" th:src="@{/js/painel.js}">
   </script>
  </head>
  <body class="">
   <div class="app-shell">
-   <div th:replace="~{fragments/layout :: sidebar('painel','prefeitura')}">
+   <div th:replace="~{fragments/layout :: sidebar('painel')}">
    </div>
    <div class="main">
     <header class="topbar">
@@ -31,8 +31,8 @@
        </span>
        Sistema online
       </span>
-      <span class="header-avatar">
-       ●
+      <span class="header-avatar" th:text="${usuario.iniciais}">
+       FC
       </span>
      </div>
     </header>
@@ -98,9 +98,9 @@
        </span>
        <div>
         <span>
-         Novos / Abertos
+         Taxa de resolução
         </span>
-        <strong th:text="${novos}">
+        <strong th:text="${taxa + '%'}">
          87%
         </strong>
        </div>
