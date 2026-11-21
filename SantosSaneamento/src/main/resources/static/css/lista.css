@@ -1,23 +1,33 @@
-.table-tools { padding: 17px 20px; border-bottom: 1px solid #e7eef2; display: flex; gap: 12px; }
-.search-box { flex: 1; position: relative; }
-.search-box .icon { position: absolute; top: 12px; left: 13px; color: #8498a6; }
-.search-box input { width: 100%; height: 42px; border: 1px solid #d5e1e7; border-radius: 8px; padding: 0 13px 0 41px; outline: 0; font-size: 11px; }
-.tool-select { width: 180px; position: relative; }
-.tool-select > .icon { position: absolute; left: 11px; top: 12px; z-index: 2; color: var(--blue-700); }
-.tool-select .control { padding-left: 36px; }
 .table-wrap { overflow-x: auto; }
 .protocol { color: var(--blue-700); }
 .priority { font-size: 9px; font-weight: 700; }
-.table-action { border: 0; color: var(--blue-700); background: transparent; padding: 6px; }
-.table-footer { border-top: 1px solid #e5edf1; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 10px; }
+.table-footer { border-top: 1px solid #e5edf1; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 10px; }
 .pagination { display: flex; gap: 4px; }
 .pagination button { border: 1px solid #dbe6eb; background: white; color: var(--muted); border-radius: 6px; width: 29px; height: 29px; font-size: 10px; }
 .pagination .current { color: white; background: var(--blue-700); border-color: var(--blue-700); }
+/* Barra de filtros: pesquisa em "pílula" na linha de cima; filtros e botão na linha de baixo.
+   Tudo com a mesma altura, o mesmo arredondamento e as mesmas bordas esquerda/direita. */
+.table-tools { padding: 16px; border-bottom: 1px solid #e7eef2; display: grid; gap: 12px; }
+
+.search-box { position: relative; }
+.search-box .control { height: 48px; border-radius: 999px; border: 1px solid #dfe8f5; padding: 0 22px 0 60px; font-size: 13px; box-shadow: 0 8px 22px rgba(27, 94, 190, .10); appearance: none; -webkit-appearance: none; }
+.search-box .control:focus { border-color: var(--blue-500); box-shadow: 0 8px 22px rgba(27, 94, 190, .10), 0 0 0 3px rgba(22, 167, 229, .12); }
+.search-box .control::-webkit-search-cancel-button { cursor: pointer; margin-right: 4px; }
+.search-submit { position: absolute; left: 10px; top: 0; bottom: 0; width: 42px; display: grid; place-items: center; border: 0; background: transparent; color: #6b6873; cursor: pointer; padding: 0; border-radius: 50%; }
+.search-submit:hover, .search-box:focus-within .search-submit { color: var(--blue-700); }
+.search-submit:focus-visible { outline: 2px solid var(--blue-500); outline-offset: -2px; }
+
+.filters-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) 130px; gap: 12px; }
+.filters-row .control, .btn-limpar { height: 48px; border-radius: 999px; }
+.filters-row select.control { appearance: none; -webkit-appearance: none; padding: 0 42px 0 20px; cursor: pointer; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b6873' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 16px center; }
+.btn-limpar { width: 100%; padding: 0; }
+
+/* Linhas da tabela clicáveis */
+.protocol-link { display: block; color: var(--blue-700); font-weight: 700; text-decoration: none; }
+.protocol-link:hover { text-decoration: underline; }
+.protocol-link:focus-visible { outline: 2px solid var(--blue-500); outline-offset: 3px; border-radius: 4px; }
+tr.linha-clicavel:focus-within { background: #f1f9fd; }
+
 @media (max-width: 760px) {
-.table-tools { flex-wrap: wrap; }
-.search-box { flex-basis: 100%; }
-.tool-select { flex: 1; }
+.filters-row { grid-template-columns: 1fr; }
 }
-.table-tools { flex-wrap: wrap; }
-.search-box { flex: 1 1 260px; }
-.tool-select.sem-icone .control { padding-left: 13px; }

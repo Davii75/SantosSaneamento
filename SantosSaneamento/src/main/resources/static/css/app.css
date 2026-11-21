@@ -40,17 +40,9 @@ button { cursor: pointer; }
 
 .logo { display: flex; align-items: center; gap: 12px; }
 
-.logo-mark { width: 39px; height: 39px; position: relative; display: inline-block; overflow: hidden; transform: rotate(-8deg); }
+.logo-mark { width: 40px; height: 40px; flex: none; display: block; }
 
-.logo-mark span { position: absolute; width: 32px; height: 9px; border-radius: 100%; border: 4px solid #4cc4eb; border-top: 0; left: 3px; }
-
-.logo-mark span:nth-child(1) { top: 5px; }
-.logo-mark span:nth-child(2) { top: 14px; left: 8px; }
-.logo-mark span:nth-child(3) { top: 23px; left: 1px; }
-
-.logo strong { display: block; font: 800 17px/1 "Manrope"; letter-spacing: -.4px; }
-
-.logo small { color: #9cd7ed; font-size: 10px; text-transform: uppercase; letter-spacing: 1.15px; }
+.logo strong { display: block; font: 800 19px/1.1 "Manrope"; letter-spacing: -.5px; white-space: nowrap; }
 
 .nav { display: flex; flex-direction: column; gap: 7px; }
 
@@ -336,3 +328,4 @@ a.profile:hover > svg { color: white; }
 .page-action { display: flex; gap: 10px; align-items: center; }
 .page-action form { margin: 0; }
 .btn-danger { background: #fdeeee; color: var(--red); border-color: #f4cccc; }
+a.btn { text-decoration: none; }

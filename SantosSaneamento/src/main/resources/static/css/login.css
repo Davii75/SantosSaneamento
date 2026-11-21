@@ -22,12 +22,19 @@
 .welcome-icon { display: grid; place-items: center; width: 48px; height: 48px; color: var(--blue-700); background: var(--blue-50); border-radius: 12px; margin-bottom: 18px; }
 .login-form > h2 { font: 800 26px "Manrope"; color: var(--blue-950); margin: 0; }
 .login-form > p { color: var(--muted); font-size: 11px; margin: 6px 0 18px; }
+/* Campo com ícone dentro da caixa (e-mail / senha) */
+.input-icon { position: relative; display: block; }
+.input-icon > .icon { position: absolute; left: 13px; top: 0; bottom: 0; display: grid; place-items: center; color: #87a0af; pointer-events: none; }
+.input-icon .control { padding-left: 42px; }
+.input-icon.password .control { padding-right: 46px; }
+.input-icon:focus-within > .icon { color: var(--blue-700); }
+.toggle-password { position: absolute; right: 5px; top: 5px; bottom: 5px; width: 34px; display: grid; place-items: center; border: 0; border-radius: 6px; background: transparent; color: #7d96a6; cursor: pointer; padding: 0; }
+.toggle-password:hover { color: var(--blue-700); background: #f0f6f9; }
+.toggle-password:focus-visible { outline: 2px solid var(--blue-500); outline-offset: 0; }
+.toggle-password .eye-off { display: none; }
+.toggle-password[aria-pressed="true"] .eye-on { display: none; }
+.toggle-password[aria-pressed="true"] .eye-off { display: block; }
 .login-form form { display: grid; gap: 17px; }
-.input-icon { position: relative; }
-.input-icon > .icon { position: absolute; left: 13px; top: 12px; color: #87a0af; }
-.input-icon .control { padding-left: 40px; }
-.input-icon.password .control { padding-right: 40px; }
-.input-icon.password button { position: absolute; right: 9px; top: 8px; border: 0; background: transparent; color: #8299a8; padding: 5px; }
 .role-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
 .role-option { min-width: 0; position: relative; border: 1px solid #dbe6eb; border-radius: 10px; background: white; padding: 12px 8px; color: var(--ink); text-align: center; transition: .15s; }
 .role-option:hover { border-color: #9fcce0; }

@@ -22,9 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     updateSelectedProfile();
 
+    // Olhinho: mostra/esconde a senha e troca o ícone (aria-pressed controla qual aparece)
     togglePasswordButton?.addEventListener('click', () => {
         if (!passwordInput) return;
-        passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+        const mostrar = passwordInput.type === 'password';
+        passwordInput.type = mostrar ? 'text' : 'password';
+        togglePasswordButton.setAttribute('aria-pressed', String(mostrar));
+        const rotulo = mostrar ? 'Ocultar senha' : 'Mostrar senha';
+        togglePasswordButton.setAttribute('aria-label', rotulo);
+        togglePasswordButton.title = rotulo;
     });
 
     forgotPasswordButton?.addEventListener('click', () => {
