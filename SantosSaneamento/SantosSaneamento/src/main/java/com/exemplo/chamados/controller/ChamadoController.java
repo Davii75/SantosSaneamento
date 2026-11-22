@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -46,9 +47,10 @@ public class ChamadoController {
 
     // ---------- listas de opções disponíveis em todas as telas deste controller ----------
 
-    @ModelAttribute("bairros")
-    public List<String> bairros() {
-        return Chamado.BAIRROS;
+    /** Bairros agrupados por região (usados nos selects do formulário e do filtro). */
+    @ModelAttribute("bairrosPorRegiao")
+    public Map<String, List<String>> bairrosPorRegiao() {
+        return Chamado.BAIRROS_POR_REGIAO;
     }
 
     @ModelAttribute("tipos")

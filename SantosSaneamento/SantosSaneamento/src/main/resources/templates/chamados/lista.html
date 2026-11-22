@@ -112,8 +112,10 @@
          <option value="">
           Todos os bairros
          </option>
-         <option th:each="b : ${bairros}" th:selected="${b == bairroSel}" th:text="${b}" th:value="${b}">
-         </option>
+         <optgroup th:each="regiao : ${bairrosPorRegiao}" th:label="${regiao.key}">
+          <option th:each="b : ${regiao.value}" th:selected="${b == bairroSel}" th:text="${b}" th:value="${b}">
+          </option>
+         </optgroup>
         </select>
         <select aria-label="Filtrar por tipo" class="control" name="tipo">
          <option value="">

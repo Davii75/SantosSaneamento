@@ -32,6 +32,8 @@ public class DadosIniciais implements CommandLineRunner {
                 "Rede entupida em frente ao número 301."), "Em análise", 2, null);
         criar(new Chamado("Rua Pará, 45", "Aparecida", "Vazamento de esgoto", "Ana Souza",
                 "Vazamento próximo à escola."), "Novo", 0, null);
+        criar(new Chamado("Rua Caraguatatuba, 120", "Saboó", "Rede obstruída", "Marina Oliveira",
+                "Esgoto voltando pelo ralo da rua quando chove."), "Novo", 0, null);
     }
 
     private void criar(Chamado chamado, String status, int diasAtras, String comentario) {

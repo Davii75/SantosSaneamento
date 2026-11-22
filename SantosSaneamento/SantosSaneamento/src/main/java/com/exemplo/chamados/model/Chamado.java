@@ -6,15 +6,51 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "chamados")
 public class Chamado {
 
     // Opções usadas nos formulários e filtros
-    public static final List<String> BAIRROS =
-            List.of("Boqueirão", "Centro", "Gonzaga", "Aparecida", "Vila Belmiro");
+    /**
+     * Bairros de Santos agrupados por região administrativa.
+     * Fonte: Decreto Municipal nº 9.653/2022 (Prefeituras Regionais de Santos).
+     */
+    public static final Map<String, List<String>> BAIRROS_POR_REGIAO = criarBairrosPorRegiao();
+
+    /** Lista simples com todos os bairros (usada para validar o que chega do formulário). */
+    public static final List<String> BAIRROS = BAIRROS_POR_REGIAO.values().stream()
+            .flatMap(List::stream)
+            .toList();
+
+    private static Map<String, List<String>> criarBairrosPorRegiao() {
+        Map<String, List<String>> regioes = new LinkedHashMap<>();
+        regioes.put("Orla / Intermediária", List.of(
+                "Aparecida", "Boqueirão", "Campo Grande", "Embaré", "Encruzilhada", "Estuário",
+                "Gonzaga", "Jabaquara", "José Menino", "Macuco", "Marapé", "Outeirinhos", "Pompéia",
+                "Ponta da Praia", "Porto Macuco", "Porto Ponta da Praia", "Vila Belmiro", "Vila Hayden"));
+        regioes.put("Centro Histórico", List.of(
+                "Centro", "Chinês", "Paquetá", "Porto Paquetá", "Porto Valongo", "Valongo",
+                "Vila Mathias", "Vila Nova"));
+        regioes.put("Zona Noroeste", List.of(
+                "Alemoa", "Areia Branca", "Bom Retiro", "Caneleira", "Castelo", "Chico de Paula",
+                "Ilhéu Alto", "Piratininga", "Porto Alemoa", "Porto Saboó", "Rádio Clube", "Saboó",
+                "Santa Maria", "São Jorge", "São Manoel", "Vila Haddad"));
+        regioes.put("Morros", List.of(
+                "Morro Cachoeira", "Morro Caneleira", "Morro Chico de Paula", "Morro Embaré",
+                "Morro Fontana", "Morro Jabaquara", "Morro José Menino", "Morro Marapé",
+                "Morro Monte Serrat", "Morro Nova Cintra", "Morro Pacheco", "Morro Penha",
+                "Morro Saboó", "Morro Santa Maria", "Morro Santa Terezinha", "Morro São Bento",
+                "Vila Progresso"));
+        regioes.put("Área Continental", List.of(
+                "Bagres", "Barnabé", "Cabuçú-Caetê", "Caruara", "Guarapá", "Iriri", "Monte Cabrão",
+                "Nossa Senhora das Neves", "Piaçaguera", "Quilombo", "Trindade"));
+        return Collections.unmodifiableMap(regioes);
+    }
     public static final List<String> TIPOS =
             List.of("Vazamento de esgoto", "Bueiro transbordando", "Rede obstruída", "Mau cheiro", "Outros");
     public static final List<String> STATUS =
